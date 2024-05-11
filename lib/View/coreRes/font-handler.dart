@@ -1,11 +1,9 @@
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
 
-
-class FontHandler extends StatelessWidget{
-
-
-  const FontHandler(this.text,{
+class FontHandler extends StatelessWidget {
+  const FontHandler(
+    this.text, {
     required this.color,
     required this.textAlign,
     this.fontsize,
@@ -18,11 +16,9 @@ class FontHandler extends StatelessWidget{
   final FontWeight? fontweight;
   final Color color;
 
-
   @override
   Widget build(BuildContext context) {
-    double width=MediaQuery.of(context).size.width;
-
+    double width = MediaQuery.of(context).size.width;
 
     return Text(
       text,
@@ -31,11 +27,10 @@ class FontHandler extends StatelessWidget{
       overflow: TextOverflow.fade,
       textAlign: textAlign,
       style: GoogleFonts.roboto(
-        fontSize: fontsize ,//provide in %
+        fontSize: fontsize, //provide in %
         fontWeight: fontweight,
         color: color,
       ),
     );
   }
-
 }

@@ -27,6 +27,8 @@ void main() {
 class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _initialisation = Firebase.initializeApp();
 
+  MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -58,13 +60,13 @@ class MyApp extends StatelessWidget {
                         ? LoginScreen.routeName
                         : HomeScreen.routeName,
                     routes: {
-                      LoginScreen.routeName: (context) => LoginScreen(),
-                      HomeScreen.routeName: (context) => DashboardScreen()
+                      LoginScreen.routeName: (context) => const LoginScreen(),
+                      HomeScreen.routeName: (context) => const DashboardScreen()
                     },
                   );
                 });
           }
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         });
   }
 }

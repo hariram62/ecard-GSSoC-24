@@ -6,7 +6,6 @@ import 'package:twitter_login/twitter_login.dart';
 import '../../coreRes/color_handler.dart';
 import '../../routes/dashboard.dart';
 
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
   static const routeName = '/login';
@@ -33,19 +32,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => DashboardScreen()),
+          MaterialPageRoute(builder: (context) => const DashboardScreen()),
           (route) => false);
     } on FirebaseAuthException catch (e) {
       if (e.code == "user-not-found") {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("email not found,please signup first"),
+          content: const Text("email not found,please signup first"),
           backgroundColor: Colors.red.withOpacity(0.5),
           elevation: 10,
           behavior: SnackBarBehavior.floating,
         ));
       } else if (e.code == "wrong-password") {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("wrong pass or email address"),
+          content: const Text("wrong pass or email address"),
           backgroundColor: Colors.red.withOpacity(0.5),
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -59,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
       }
     }
+    return null;
   }
 
   Future<String?> onSignup(SignUpData data) async {
@@ -68,17 +68,17 @@ class _LoginScreenState extends State<LoginScreen> {
           .createUserWithEmailAndPassword(
               email: data.email, password: data.password);
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Residtrstion successfully login"),
         backgroundColor: Colors.green,
         elevation: 10,
         behavior: SnackBarBehavior.floating,
       ));
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()));
     } on FirebaseAuthException catch (e) {
       if (e.code == "weak-password") {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Password proviide to weak"),
           backgroundColor: Colors.green,
           elevation: 10,
@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
       } else if (e.code == "email-already-in-use") {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Email already in use"),
+          content: const Text("Email already in use"),
           backgroundColor: Colors.red.withOpacity(0.5),
           elevation: 10,
           behavior: SnackBarBehavior.floating,
@@ -100,12 +100,13 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
       }
     }
+    return null;
   }
 
   onForgotPassword(String email) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Email successfully send"),
         backgroundColor: Colors.green,
         elevation: 10,
@@ -114,13 +115,13 @@ class _LoginScreenState extends State<LoginScreen> {
     } on FirebaseAuthException catch (e) {
       if (e.code == "user-not-found") {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("user not found"),
+          content: const Text("user not found"),
           backgroundColor: Colors.red.withOpacity(0.5),
           elevation: 10,
           behavior: SnackBarBehavior.floating,
         ));
       } else if (e.code == "wrong-password") {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("wrong password"),
           backgroundColor: Colors.red,
           elevation: 10,
@@ -162,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
         await FirebaseAuth.instance.signInWithCredential(credential);
     print(credential);
     if (userCredential.user != null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("successfully login"),
         backgroundColor: Colors.green,
         elevation: 10,
@@ -170,9 +171,10 @@ class _LoginScreenState extends State<LoginScreen> {
       ));
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => DashboardScreen()),
+          MaterialPageRoute(builder: (context) => const DashboardScreen()),
           (route) => false);
     }
+    return null;
   }
 
   Future<String?> signInWithTwitter() async {
@@ -195,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
     UserCredential userCredential =
         await FirebaseAuth.instance.signInWithCredential(twitterAuthCredential);
     if (userCredential.user != null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("successfully login"),
         backgroundColor: Colors.green,
         elevation: 10,
@@ -203,9 +205,10 @@ class _LoginScreenState extends State<LoginScreen> {
       ));
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => DashboardScreen()),
+          MaterialPageRoute(builder: (context) => const DashboardScreen()),
           (route) => false);
     }
+    return null;
   }
 
   @override

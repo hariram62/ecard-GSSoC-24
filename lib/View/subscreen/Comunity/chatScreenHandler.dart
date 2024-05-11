@@ -37,7 +37,7 @@ class ChatScreenHandler extends StatefulWidget {
 }
 
 class _ChatScreenHandlerState extends State<ChatScreenHandler> {
-  List<types.Message> _messages = [];
+  final List<types.Message> _messages = [];
   final FirebaseAuth auth = FirebaseAuth.instance;
   DateTime now = DateTime.now();
 
@@ -56,8 +56,8 @@ class _ChatScreenHandlerState extends State<ChatScreenHandler> {
   }
 
   void _loadMessages() async {
-    var loadMessage;
-    var sendMessage;
+    types.TextMessage loadMessage;
+    types.TextMessage sendMessage;
 
     try {
       //load send messages
@@ -69,7 +69,7 @@ class _ChatScreenHandlerState extends State<ChatScreenHandler> {
           .collection(date.toString())
           .get()
           .then((QuerySnapshot querySnapshot) {
-        querySnapshot.docs.forEach((doc) {
+        for (var doc in querySnapshot.docs) {
           sendMessage = types.TextMessage(
               author:
                   types.User.fromJson(doc['author'] as Map<String, dynamic>),
@@ -80,7 +80,7 @@ class _ChatScreenHandlerState extends State<ChatScreenHandler> {
           setState(() {
             _messages.add(sendMessage);
           });
-        });
+        }
       });
     } catch (e) {}
 
@@ -95,7 +95,7 @@ class _ChatScreenHandlerState extends State<ChatScreenHandler> {
           .collection(date.toString())
           .get()
           .then((QuerySnapshot querySnapshot) {
-        querySnapshot.docs.forEach((doc) {
+        for (var doc in querySnapshot.docs) {
           loadMessage = types.TextMessage(
               author:
                   types.User.fromJson(doc['author'] as Map<String, dynamic>),
@@ -107,7 +107,7 @@ class _ChatScreenHandlerState extends State<ChatScreenHandler> {
           setState(() {
             _messages.add(loadMessage);
           });
-        });
+        }
       });
     } catch (e) {}
   }

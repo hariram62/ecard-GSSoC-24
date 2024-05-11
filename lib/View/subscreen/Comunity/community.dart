@@ -8,7 +8,10 @@ import '../../coreRes/font-handler.dart';
 import 'ChatBotChatScreen.dart';
 
 class CommunityPage extends StatefulWidget {
-  const CommunityPage({super.key, this.UserConnectionsSnapshot,});
+  const CommunityPage({
+    super.key,
+    this.UserConnectionsSnapshot,
+  });
   final UserConnectionsSnapshot;
   @override
   State<CommunityPage> createState() => _CommunityPageState();
@@ -17,20 +20,17 @@ class CommunityPage extends StatefulWidget {
 class _CommunityPageState extends State<CommunityPage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
-
-
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
 
     return StreamBuilder<QuerySnapshot>(
-        stream:  widget.UserConnectionsSnapshot,
+        stream: widget.UserConnectionsSnapshot,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             print("something has wrong");
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-
             return const Center(child: CircularProgressIndicator());
           }
 
@@ -41,7 +41,7 @@ class _CommunityPageState extends State<CommunityPage> {
           snapshot.data!.docs.map((DocumentSnapshot document) {
             Map a = document.data() as Map<String, dynamic>;
 
-            if(a["uid"]!=auth.currentUser?.uid){
+            if (a["uid"] != auth.currentUser?.uid) {
               storedocs.add(a);
               a['id'] = document.id;
             }
@@ -60,7 +60,8 @@ class _CommunityPageState extends State<CommunityPage> {
                       ImgSrc: storedocs[item]['image'],
                       Uid: storedocs[item]['uid'],
                       lastseen: '10:2',
-                      lastmessage: 'hii whats up', FriendLavel: '',
+                      lastmessage: 'hii whats up',
+                      FriendLavel: '',
                     )
                   }
                 ],
@@ -72,16 +73,17 @@ class _CommunityPageState extends State<CommunityPage> {
 }
 
 class ActivitesBar extends StatelessWidget {
-  ActivitesBar(
+  const ActivitesBar(
       {super.key,
       required this.FriendName,
-      this.isforSearch=false,
+      this.isforSearch = false,
       required this.ImgSrc,
       this.isChatWidge = false,
-      required this.Uid,  this.lastseen="",
-        this.lastmessage="",
-        this.onAddpress, required String FriendLavel
-      });
+      required this.Uid,
+      this.lastseen = "",
+      this.lastmessage = "",
+      this.onAddpress,
+      required String FriendLavel});
 
   final String FriendName;
   final bool isforSearch;
@@ -92,15 +94,9 @@ class ActivitesBar extends StatelessWidget {
   final String lastmessage;
   final onAddpress;
 
-
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         height: 80.sp,
         child: InkWell(
           onTap: () {
@@ -156,10 +152,26 @@ class ActivitesBar extends StatelessWidget {
                         ),
                       ]),
                 ),
-                isforSearch?SizedBox(width: 60.w,):SizedBox(width: 130.w,),
-                FontHandler(lastseen, color:ColorHandler.normalFont.withOpacity(0.6), textAlign: TextAlign.end),
-
-                isforSearch ?TextButton(onPressed:onAddpress, child: const FontHandler("ADD",color: ColorHandler.normalFont, textAlign: TextAlign.center,),):const SizedBox(),
+                isforSearch
+                    ? SizedBox(
+                        width: 60.w,
+                      )
+                    : SizedBox(
+                        width: 130.w,
+                      ),
+                FontHandler(lastseen,
+                    color: ColorHandler.normalFont.withOpacity(0.6),
+                    textAlign: TextAlign.end),
+                isforSearch
+                    ? TextButton(
+                        onPressed: onAddpress,
+                        child: const FontHandler(
+                          "ADD",
+                          color: ColorHandler.normalFont,
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    : const SizedBox(),
               ],
             ),
           ),

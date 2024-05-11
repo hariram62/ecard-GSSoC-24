@@ -1,4 +1,3 @@
-
 import "package:flutter/material.dart";
 import "package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
@@ -9,12 +8,12 @@ import "../coreRes/font-handler.dart";
 import "../subscreen/homeOntap/onActivitytap.dart";
 
 class ReportBar extends StatelessWidget {
-  const ReportBar(
-      {super.key,
-        required this.title,
-        this.subtitle= "",
-        required this.iconh,
-        });
+  const ReportBar({
+    super.key,
+    required this.title,
+    this.subtitle = "",
+    required this.iconh,
+  });
 
   final String title;
   final String subtitle;
@@ -22,14 +21,13 @@ class ReportBar extends StatelessWidget {
 
   Route _createRoute() {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => const OnActivityTap(),
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const OnActivityTap(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-
         return child;
       },
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +35,10 @@ class ReportBar extends StatelessWidget {
         height: 80.sp,
         child: InkWell(
           onTap: () {
-            Navigator.push(context,
-                _createRoute());  },
+            Navigator.push(context, _createRoute());
+          },
           child: Card(
-            color:ColorHandler.normalFont.withOpacity(0.1),
-
+            color: ColorHandler.normalFont.withOpacity(0.1),
             child: Row(
               children: [
                 Padding(
@@ -50,22 +47,18 @@ class ReportBar extends StatelessWidget {
                     width: 50.sp,
                     height: 50.sp,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100.sp),
-                      child: Icon(
-                        iconh
-                      )
-                    ),
+                        borderRadius: BorderRadius.circular(100.sp),
+                        child: Icon(iconh)),
                   ),
                 ),
                 Container(
                   padding: EdgeInsets.all(10.sp),
                   width: 120,
                   child: Column(
-
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         FontHandler(
-                         title,
+                          title,
                           color: ColorHandler.normalFont,
                           textAlign: TextAlign.left,
                           fontweight: FontWeight.normal,
@@ -80,11 +73,9 @@ class ReportBar extends StatelessWidget {
                         ),
                       ]),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(left: 80),
-
                   child: SizedBox(
-
                     height: 60,
                     width: 60,
                     child: CircularProgress(),

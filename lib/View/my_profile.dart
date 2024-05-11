@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:Monitor/View/LayoutScreens/UserProfilepageLayout/UserInfoNav.dart';
 import 'package:Monitor/View/subscreen/authenticat/login.dart';
@@ -20,24 +19,13 @@ import 'coreRes/icon_handler.dart';
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
-
-
-
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
-
-
-
-
   @override
-  void initState(){
-
-
-  }
+  void initState() {}
 
   @override
   Widget build(BuildContext context) {
@@ -52,16 +40,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: EdgeInsets.symmetric(vertical: 8.sp),
         child: Column(
           children: [
-
             LayoutBuilder(
                 builder: (BuildContext ctx, BoxConstraints constraints) {
-                  return const UserprofileInfo();
-                }),
+              return const UserprofileInfo();
+            }),
 
             SizedBox(
               height: 10.r,
             ),
-            Divider(),
+            const Divider(),
             SizedBox(
               height: 10.r,
             ),
@@ -69,9 +56,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             //Menu
             LayoutBuilder(
                 builder: (BuildContext ctx, BoxConstraints constraints) {
-                  return const UserInfoNav();
-                }),
-
+              return const UserInfoNav();
+            }),
           ],
         ),
       ),

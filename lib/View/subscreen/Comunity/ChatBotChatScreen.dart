@@ -24,10 +24,10 @@ import '../../coreRes/icon_handler.dart';
 class ChatScreenHandler extends StatefulWidget {
   const ChatScreenHandler(
       {super.key,
-        this.isComunityPage = true,
-        this.Uid = '',
-        this.FriendName = '',
-        this.ImgSrc = ''});
+      this.isComunityPage = true,
+      this.Uid = '',
+      this.FriendName = '',
+      this.ImgSrc = ''});
   final isComunityPage;
   final String Uid;
   final String FriendName;
@@ -38,7 +38,7 @@ class ChatScreenHandler extends StatefulWidget {
 }
 
 class _ChatScreenHandlerState extends State<ChatScreenHandler> {
-  List<types.Message> _messages = [];
+  final List<types.Message> _messages = [];
   final FirebaseAuth auth = FirebaseAuth.instance;
   DateTime now = DateTime.now();
 
@@ -57,8 +57,8 @@ class _ChatScreenHandlerState extends State<ChatScreenHandler> {
   }
 
   void _loadMessages() async {
-    var loadMessage;
-    var sendMessage;
+    types.TextMessage loadMessage;
+    types.TextMessage sendMessage;
 
     try {
       //load send messages
@@ -70,10 +70,10 @@ class _ChatScreenHandlerState extends State<ChatScreenHandler> {
           .collection(date.toString())
           .get()
           .then((QuerySnapshot querySnapshot) {
-        querySnapshot.docs.forEach((doc) {
+        for (var doc in querySnapshot.docs) {
           sendMessage = types.TextMessage(
               author:
-              types.User.fromJson(doc['author'] as Map<String, dynamic>),
+                  types.User.fromJson(doc['author'] as Map<String, dynamic>),
               createdAt: doc["createdAt"],
               id: doc["id"],
               text: doc["text"],
@@ -81,7 +81,7 @@ class _ChatScreenHandlerState extends State<ChatScreenHandler> {
           setState(() {
             _messages.add(sendMessage);
           });
-        });
+        }
       });
     } catch (e) {}
 
@@ -96,10 +96,10 @@ class _ChatScreenHandlerState extends State<ChatScreenHandler> {
           .collection(date.toString())
           .get()
           .then((QuerySnapshot querySnapshot) {
-        querySnapshot.docs.forEach((doc) {
+        for (var doc in querySnapshot.docs) {
           loadMessage = types.TextMessage(
               author:
-              types.User.fromJson(doc['author'] as Map<String, dynamic>),
+                  types.User.fromJson(doc['author'] as Map<String, dynamic>),
               createdAt: doc["createdAt"],
               id: doc["id"],
               text: doc["text"],
@@ -108,7 +108,7 @@ class _ChatScreenHandlerState extends State<ChatScreenHandler> {
           setState(() {
             _messages.add(loadMessage);
           });
-        });
+        }
       });
     } catch (e) {}
   }
@@ -218,9 +218,9 @@ class _ChatScreenHandlerState extends State<ChatScreenHandler> {
       if (message.uri.startsWith('http')) {
         try {
           final index =
-          _messages.indexWhere((element) => element.id == message.id);
+              _messages.indexWhere((element) => element.id == message.id);
           final updatedMessage =
-          (_messages[index] as types.FileMessage).copyWith(
+              (_messages[index] as types.FileMessage).copyWith(
             isLoading: true,
           );
 
@@ -240,9 +240,9 @@ class _ChatScreenHandlerState extends State<ChatScreenHandler> {
           }
         } finally {
           final index =
-          _messages.indexWhere((element) => element.id == message.id);
+              _messages.indexWhere((element) => element.id == message.id);
           final updatedMessage =
-          (_messages[index] as types.FileMessage).copyWith(
+              (_messages[index] as types.FileMessage).copyWith(
             isLoading: null,
           );
 
@@ -257,9 +257,9 @@ class _ChatScreenHandlerState extends State<ChatScreenHandler> {
   }
 
   void _handlePreviewDataFetched(
-      types.TextMessage message,
-      types.PreviewData previewData,
-      ) {
+    types.TextMessage message,
+    types.PreviewData previewData,
+  ) {
     final index = _messages.indexWhere((element) => element.id == message.id);
     final updatedMessage = (_messages[index] as types.TextMessage).copyWith(
       previewData: previewData,
@@ -303,13 +303,13 @@ class _ChatScreenHandlerState extends State<ChatScreenHandler> {
   }
 
   Widget _bubbleBuilder(
-      Widget child, {
-        required types.Message message,
-        required bool nextMessageInGroup,
-      }) =>
+    Widget child, {
+    required types.Message message,
+    required bool nextMessageInGroup,
+  }) =>
       Bubble(
           color: _user.id != message.author.id ||
-              message.type == types.MessageType.image
+                  message.type == types.MessageType.image
               ? const Color(0xffa29ae1) // Color for other user's messages
               : const Color(0xff6f61e8), // Color for current user's messages
           margin: nextMessageInGroup
@@ -318,8 +318,8 @@ class _ChatScreenHandlerState extends State<ChatScreenHandler> {
           nip: nextMessageInGroup
               ? BubbleNip.no
               : _user.id != message.author.id
-              ? BubbleNip.leftTop
-              : BubbleNip.rightTop,
+                  ? BubbleNip.leftTop
+                  : BubbleNip.rightTop,
           alignment: _user.id != message.author
               ? Alignment.bottomRight
               : Alignment.bottomLeft,
@@ -338,46 +338,46 @@ class _ChatScreenHandlerState extends State<ChatScreenHandler> {
     return Scaffold(
       appBar: widget.isComunityPage
           ? AppBar(
-        centerTitle: true,
-        backgroundColor: ColorHandler.bgColor,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            IconHandler.angle_left,
-            color: ColorHandler.normalFont,
-          ),
-        ),
-        title: Row(
-          children: [
-            SizedBox(
-              width: 35.sp,
-              height: 35.sp,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(100.sp),
-                child: Image.network(
-                  widget.ImgSrc,
-                  fit: BoxFit.fill,
+              centerTitle: true,
+              backgroundColor: ColorHandler.bgColor,
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  IconHandler.angle_left,
+                  color: ColorHandler.normalFont,
                 ),
               ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(
-              widget.FriendName,
-              style: TextStyle(
-                color: ColorHandler.normalFont,
-                fontWeight: FontWeight.normal,
-                fontSize: 20.sp,
+              title: Row(
+                children: [
+                  SizedBox(
+                    width: 35.sp,
+                    height: 35.sp,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100.sp),
+                      child: Image.network(
+                        widget.ImgSrc,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    widget.FriendName,
+                    style: TextStyle(
+                      color: ColorHandler.normalFont,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 20.sp,
+                    ),
+                    textDirection: TextDirection.ltr,
+                    textAlign: TextAlign.left,
+                  ),
+                ],
               ),
-              textDirection: TextDirection.ltr,
-              textAlign: TextAlign.left,
-            ),
-          ],
-        ),
-      )
+            )
           : null,
       body: Chat(
         messages: _messages,

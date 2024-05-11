@@ -1,12 +1,10 @@
-
 import 'package:flutter/material.dart';
 
 import 'QRScreens/ScanQRCode.dart';
 import 'coreRes/color_handler.dart';
 
-
 class QRScanScreen extends StatefulWidget {
-  QRScanScreen({super.key});
+  const QRScanScreen({super.key});
   static const routeName = '/Scan';
   @override
   _QRScanScreen createState() => _QRScanScreen();
@@ -24,7 +22,7 @@ class _QRScanScreen extends State<QRScanScreen> {
       backgroundColor: ColorHandler.bgColor,
 
       //body part
-      body: QRCodeScannerScreen(),
+      body: const QRCodeScannerScreen(),
     );
   }
 }

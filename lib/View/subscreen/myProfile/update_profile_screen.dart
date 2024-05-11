@@ -123,10 +123,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           onPressed: () {
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => ProfileScreen()),
+                MaterialPageRoute(builder: (context) => const ProfileScreen()),
                 (route) => false);
           },
-          icon: Icon(
+          icon: const Icon(
             IconHandler.angle_left,
             color: ColorHandler.normalFont,
           ),
@@ -173,12 +173,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         color: Colors.yellow),
                     child: IconButton(
                       alignment: Alignment.center,
-                      padding: EdgeInsets.only(right: 0),
+                      padding: const EdgeInsets.only(right: 0),
                       onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ImagePicker_(
+                                builder: (context) => const ImagePicker_(
                                       isUpdateProfile: true,
                                     )));
                       },
@@ -201,7 +201,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     height: 50.sp,
                   ),
                   TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       fillColor: ColorHandler.normalFont,
                       label: Text("Full Name"),
                       prefixIcon: Icon(
@@ -213,13 +213,14 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       if (value!.isEmpty) {
                         return 'please enter name';
                       }
+                      return null;
                     },
                   ),
                   SizedBox(
                     height: 25.sp,
                   ),
                   TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         label: Text("E-Mail"),
                         prefixIcon: Icon(
                           IconHandler.mail,
@@ -231,7 +232,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     height: 25.sp,
                   ),
                   TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       label: Text("Phone"),
                       prefixIcon: Icon(
                         IconHandler.phone,
@@ -242,13 +243,14 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       if (value!.isEmpty || value.length != 10) {
                         return 'please enter valid Phone number';
                       }
+                      return null;
                     },
                   ),
                   SizedBox(
                     height: 25.sp,
                   ),
                   TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       label: Text("About"),
                       prefixIcon: Icon(
                         IconHandler.pass,
@@ -259,6 +261,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       if (value!.isEmpty) {
                         return 'please enter about text';
                       }
+                      return null;
                     },
                   ),
                   SizedBox(
@@ -290,7 +293,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ProfileScreen()),
+                                    builder: (context) =>
+                                        const ProfileScreen()),
                                 (route) => false);
                           }
                         },

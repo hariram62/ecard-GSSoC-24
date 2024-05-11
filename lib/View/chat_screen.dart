@@ -21,13 +21,11 @@ class _ChatScreenState extends State<ChatScreen>
   late TabController _tabController;
   final ScrollController _scrollController = ScrollController();
 
-
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: _screens.length, vsync: this);
     _tabController.addListener(_handleTabChange);
-
   }
 
   // Screens to be displayed in each tab
@@ -36,7 +34,8 @@ class _ChatScreenState extends State<ChatScreen>
     CommunityPage(
       UserConnectionsSnapshot: FirebaseFirestore.instance
           .collection("User_Connections")
-          .doc(FirebaseAuth.instance.currentUser!.uid) // Access the uid property from FirebaseAuth
+          .doc(FirebaseAuth.instance.currentUser!
+              .uid) // Access the uid property from FirebaseAuth
           .collection("Connections")
           .snapshots(),
     ),

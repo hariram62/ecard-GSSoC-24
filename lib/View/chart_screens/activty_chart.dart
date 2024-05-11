@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
@@ -38,7 +37,7 @@ class _ActivityChartState extends State<ActivityChart> {
   @override
   Widget build(BuildContext context) {
     final List<Color> color = <Color>[];
-    color.add(Colors.transparent.withOpacity(0)!);
+    color.add(Colors.transparent.withOpacity(0));
     color.add(Colors.transparent.withOpacity(0.2));
     color.add(Colors.transparent.withOpacity(0.4));
     final List<double> stops = <double>[];
@@ -57,33 +56,33 @@ class _ActivityChartState extends State<ActivityChart> {
       plotAreaBorderWidth: 0,
       margin: EdgeInsets.zero,
       primaryXAxis: widget.isanalysis
-          ? NumericAxis(
-              majorGridLines: const MajorGridLines(
+          ? const NumericAxis(
+              majorGridLines: MajorGridLines(
                   width: 1, color: Colors.white24, dashArray: <double>[5, 5]),
               majorTickLines:
-                  const MajorTickLines(width: 0), // Little sticks on left side
-              axisLine: const AxisLine(
+                  MajorTickLines(width: 0), // Little sticks on left side
+              axisLine: AxisLine(
                   color: Colors.transparent, // Y left line
                   dashArray: <double>[5, 5]),
               minimum: 0,
               maximum: 30,
             )
-          : NumericAxis(
+          : const NumericAxis(
               isVisible: false,
             ),
       primaryYAxis: widget.isanalysis
-          ? NumericAxis(
-              majorGridLines: const MajorGridLines(
+          ? const NumericAxis(
+              majorGridLines: MajorGridLines(
                   width: 1, color: Colors.white24, dashArray: <double>[5, 5]),
               majorTickLines:
-                  const MajorTickLines(width: 0), // Little sticks on left side
-              axisLine: const AxisLine(
+                  MajorTickLines(width: 0), // Little sticks on left side
+              axisLine: AxisLine(
                   color: Colors.transparent, // Y left line
                   dashArray: <double>[5, 5]),
               minimum: 0,
               maximum: 30,
             )
-          : NumericAxis(
+          : const NumericAxis(
               isVisible: false,
             ),
       tooltipBehavior: _tooltip,
@@ -95,7 +94,11 @@ class _ActivityChartState extends State<ActivityChart> {
           color: Colors.blue,
           gradient: gradientColors,
           borderGradient: LinearGradient(
-              colors: [Colors.transparent.withOpacity(0),Colors.green.withOpacity(0.2),Colors.green.shade400],
+              colors: [
+                Colors.transparent.withOpacity(0),
+                Colors.green.withOpacity(0.2),
+                Colors.green.shade400
+              ],
               stops: stops,
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,

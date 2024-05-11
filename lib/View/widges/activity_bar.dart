@@ -1,4 +1,3 @@
-
 import "package:flutter/material.dart";
 import "package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
@@ -22,12 +21,17 @@ class ActivitesBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         height: 80.r,
         child: InkWell(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const AnalysisScreen(isanalysis: false,isactivity: true,)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AnalysisScreen(
+                          isanalysis: false,
+                          isactivity: true,
+                        )));
           },
           child: Card(
             color: (isChatWidge)
@@ -54,7 +58,6 @@ class ActivitesBar extends StatelessWidget {
                   padding: EdgeInsets.all(10.sp),
                   width: 120.r,
                   child: Column(
-
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         FontHandler(
@@ -75,10 +78,9 @@ class ActivitesBar extends StatelessWidget {
                 ),
                 Center(
                   child: SizedBox(
-
                     height: 60.r,
                     width: 100.r,
-                    child: ActivityChart(),
+                    child: const ActivityChart(),
                   ),
                 ),
               ],

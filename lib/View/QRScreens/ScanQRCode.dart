@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -6,8 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../coreRes/color_handler.dart';
 
-
 class QRCodeScannerScreen extends StatefulWidget {
+  const QRCodeScannerScreen({super.key});
+
   @override
   _QRCodeScannerState createState() => _QRCodeScannerState();
 }
@@ -93,7 +93,7 @@ class _QRCodeScannerState extends State<QRCodeScannerScreen> {
                           ),
                         ),
                         onPressed: () => scanQR(),
-                        child: Text('Start QR scan')),
+                        child: const Text('Start QR scan')),
                   ]));
         }));
   }

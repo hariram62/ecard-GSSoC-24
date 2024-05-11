@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -12,7 +11,7 @@ class ProfileMenuWidget extends StatelessWidget {
   final bool endIcon;
   final Color? textColor;
 
-  ProfileMenuWidget(
+  const ProfileMenuWidget(
       {super.key,
       required this.icon,
       required this.title,

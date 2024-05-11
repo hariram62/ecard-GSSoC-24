@@ -27,10 +27,10 @@ class ActivitybarLayout extends StatelessWidget {
           // Friends activity list
           FadedEdges(
             child: Builder(builder: (context) {
-
-              if(MediaQuery.of(context).size.height >= 800 && MediaQuery.of(context).size.height < 860){
+              if (MediaQuery.of(context).size.height >= 800 &&
+                  MediaQuery.of(context).size.height < 860) {
                 return SizedBox(
-                  height: 300.r-37,
+                  height: 300.r - 37,
                   child: const SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Column(
@@ -65,8 +65,7 @@ class ActivitybarLayout extends StatelessWidget {
                     ),
                   ),
                 );
-              }
-              else if(MediaQuery.of(context).size.height > 860){
+              } else if (MediaQuery.of(context).size.height > 860) {
                 return SizedBox(
                   height: 0.38.sh,
                   child: const SingleChildScrollView(
@@ -103,11 +102,9 @@ class ActivitybarLayout extends StatelessWidget {
                     ),
                   ),
                 );
-
-              }
-              else{
+              } else {
                 return SizedBox(
-                  height:0.29.sh,
+                  height: 0.29.sh,
                   child: const SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Column(
@@ -142,12 +139,7 @@ class ActivitybarLayout extends StatelessWidget {
                     ),
                   ),
                 );
-
               }
-
-
-
-
             }),
           ),
         ],

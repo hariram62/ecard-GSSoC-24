@@ -18,120 +18,106 @@ class VirtualProfileScreen extends StatefulWidget {
   const VirtualProfileScreen({super.key});
   static var croppedPath;
 
-
   @override
   State<VirtualProfileScreen> createState() => _VirtualProfileScreenState();
 }
 
 class _VirtualProfileScreenState extends State<VirtualProfileScreen> {
+  bool EditPress = false;
+  final controller1 = TextEditingController();
+  final controller2 = TextEditingController();
+  final controller3 = TextEditingController();
+  final controller4 = TextEditingController();
+  final controller5 = TextEditingController();
+  final controller6 = TextEditingController();
 
-  bool EditPress= false;
-  final controller1=TextEditingController();
-  final controller2=TextEditingController();
-  final controller3=TextEditingController();
-  final controller4=TextEditingController();
-  final controller5=TextEditingController();
-  final controller6=TextEditingController();
-
-  String title="John Grandson";
-  String subtitle="Real Estate Broker";
-  String about="This package is also a submission to Flutter Create contest. The basic rule of this contest is to measure the total Dart file size less or equal 5KB.After unzipping the compressed file, run following command to update dependencies";
-  String twitter='';
-  String linkedin='';
-  String website='';
-  String CorporateLogo='https://images.unsplash.com/photo-1620288627223-53302f4e8c74?q=80&w=464&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-  String Userimg="https://cdn.vectorstock.com/i/1000x1000/13/68/person-gray-photo-placeholder-man-vector-23511368.webp";
+  String title = "John Grandson";
+  String subtitle = "Real Estate Broker";
+  String about =
+      "This package is also a submission to Flutter Create contest. The basic rule of this contest is to measure the total Dart file size less or equal 5KB.After unzipping the compressed file, run following command to update dependencies";
+  String twitter = '';
+  String linkedin = '';
+  String website = '';
+  String CorporateLogo =
+      'https://images.unsplash.com/photo-1620288627223-53302f4e8c74?q=80&w=464&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+  String Userimg =
+      "https://cdn.vectorstock.com/i/1000x1000/13/68/person-gray-photo-placeholder-man-vector-23511368.webp";
   File? image;
-  final User? user=SnapShotHandler.CurrentUser();
-  CollectionReference User_profile = FirebaseFirestore.instance.collection("User_Profiles");
-  CollectionReference Virtual_Profile = FirebaseFirestore.instance.collection("Virtual_Profile");
-
-
-
+  final User? user = SnapShotHandler.CurrentUser();
+  CollectionReference User_profile =
+      FirebaseFirestore.instance.collection("User_Profiles");
+  CollectionReference Virtual_Profile =
+      FirebaseFirestore.instance.collection("Virtual_Profile");
 
   Future<void> SaveInfo() async {
     try {
-
       var imageName = user!.uid.toString();
-      var storageRef = FirebaseStorage.instance.ref().child('VirtualProfileCompanyLogos/$imageName.jpg');
-      image=File(VirtualProfileScreen.croppedPath);
+      var storageRef = FirebaseStorage.instance
+          .ref()
+          .child('VirtualProfileCompanyLogos/$imageName.jpg');
+      image = File(VirtualProfileScreen.croppedPath);
       var uploadTask = storageRef.putFile(image!);
       await uploadTask;
       var downloadUrl = await (await uploadTask).ref.getDownloadURL();
 
-
-
-      var data={
-        "CorporateLogo":downloadUrl.toString(),
-        "title":title,
+      var data = {
+        "CorporateLogo": downloadUrl.toString(),
+        "title": title,
         "subtitle": subtitle,
         "about": about,
-        "twitter":twitter,
+        "twitter": twitter,
         "Website": website,
         "Linkedin": linkedin
       };
 
-      SnapShotHandler.SetData(Virtual_Profile.doc(user?.uid),data);
-
-
+      SnapShotHandler.SetData(Virtual_Profile.doc(user?.uid), data);
     } catch (e) {
       print("Error getting document: $e");
     }
   }
 
-
   Future<void> ImageHandler() async {
-    if(VirtualProfileScreen.croppedPath!=null){
-      image=File(VirtualProfileScreen.croppedPath);
+    if (VirtualProfileScreen.croppedPath != null) {
+      image = File(VirtualProfileScreen.croppedPath);
     }
 
     await User_profile.doc(user?.uid).get().then(
-          (DocumentSnapshot doc) {
-            if(doc.exists) {
-              final data = doc.data() as Map<String, dynamic>;
-              setState(() {
-                Userimg = data['image'].toString();
-              });
-            }
+      (DocumentSnapshot doc) {
+        if (doc.exists) {
+          final data = doc.data() as Map<String, dynamic>;
+          setState(() {
+            Userimg = data['image'].toString();
+          });
+        }
       },
       onError: (e) => print("Error getting document: $e"),
     );
 
     await Virtual_Profile.doc(user?.uid).get().then(
-          (DocumentSnapshot doc) {
-            if (doc.exists) {
-              final data = doc.data() as Map<String, dynamic>;
-              setState(() {
-                CorporateLogo = data['CorporateLogo'].toString();
-                title=data['title'].toString();
-                subtitle=data['subtitle'].toString();
-                about=data['about'].toString();
-                twitter=data['twitter'].toString();
-                linkedin=data['Linkedin'].toString();
-                website=data['website'].toString();
-              });
-            }
-
-          },
+      (DocumentSnapshot doc) {
+        if (doc.exists) {
+          final data = doc.data() as Map<String, dynamic>;
+          setState(() {
+            CorporateLogo = data['CorporateLogo'].toString();
+            title = data['title'].toString();
+            subtitle = data['subtitle'].toString();
+            about = data['about'].toString();
+            twitter = data['twitter'].toString();
+            linkedin = data['Linkedin'].toString();
+            website = data['website'].toString();
+          });
+        }
+      },
       onError: (e) => print("Error getting document: $e"),
     );
   }
 
-
-
-
-
   @override
-  void initState(){
-    try{
+  void initState() {
+    try {
       ImageHandler();
-    }catch(e) {
-
-    }
-
+    } catch (e) {}
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -159,10 +145,11 @@ class _VirtualProfileScreenState extends State<VirtualProfileScreen> {
                       child: SizedBox(
                         height: 20.h,
                         width: 20.w,
-                        child: image!=null? Image.file(image!):Image.network(
-                          CorporateLogo,
-
-                        ),
+                        child: image != null
+                            ? Image.file(image!)
+                            : Image.network(
+                                CorporateLogo,
+                              ),
                       ),
                     ),
                   ),
@@ -177,13 +164,16 @@ class _VirtualProfileScreenState extends State<VirtualProfileScreen> {
                           color: Colors.yellow),
                       child: IconButton(
                         alignment: Alignment.center,
-                        padding: EdgeInsets.only(right: 0),
+                        padding: const EdgeInsets.only(right: 0),
                         onPressed: () {
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>ImagePicker_(isVirtualProfile: true,)));
-
-
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ImagePicker_(
+                                        isVirtualProfile: true,
+                                      )));
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           IconHandler.alternate_pencil,
                           color: ColorHandler.bgColor,
                           size: 20,
@@ -205,101 +195,86 @@ class _VirtualProfileScreenState extends State<VirtualProfileScreen> {
                         clipBehavior: Clip.hardEdge,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
-
                         ),
-                        child: EditPress?
-
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          mainAxisSize: MainAxisSize.min,
-
-
-
-                          children: [
-                             SizedBox(
-                               height: 30,
-                               child: TextField(
-                                 controller: controller1,
-                                 textAlign: TextAlign.center,
-                                 textAlignVertical: TextAlignVertical.bottom,
-
-                                 selectionHeightStyle: BoxHeightStyle.includeLineSpacingTop,
-                                 decoration: InputDecoration(
-                                   hintText: "ex. John Grandson",
-                                     border: InputBorder.none
-
-
-
-                                 ),
-                               ),
-                             ),
-                            SizedBox(
-                              height: 40,
-                              child: TextField(
-
-                                controller: controller2,
-                                textAlign: TextAlign.center,
-                                textAlignVertical: TextAlignVertical.bottom,
-                                decoration: InputDecoration(
-                                  hintText: "ex. Real Estate Broker",
-                                  border: InputBorder.none
-                                ),
+                        child: EditPress
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SizedBox(
+                                    height: 30,
+                                    child: TextField(
+                                      controller: controller1,
+                                      textAlign: TextAlign.center,
+                                      textAlignVertical:
+                                          TextAlignVertical.bottom,
+                                      selectionHeightStyle:
+                                          BoxHeightStyle.includeLineSpacingTop,
+                                      decoration: const InputDecoration(
+                                          hintText: "ex. John Grandson",
+                                          border: InputBorder.none),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 40,
+                                    child: TextField(
+                                      controller: controller2,
+                                      textAlign: TextAlign.center,
+                                      textAlignVertical:
+                                          TextAlignVertical.bottom,
+                                      decoration: const InputDecoration(
+                                          hintText: "ex. Real Estate Broker",
+                                          border: InputBorder.none),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 120,
+                                    child: TextField(
+                                      controller: controller3,
+                                      textAlign: TextAlign.center,
+                                      textAlignVertical:
+                                          TextAlignVertical.bottom,
+                                      maxLines: 5,
+                                      decoration: const InputDecoration(
+                                          hintText:
+                                              "ex. This package is also a submission to Flutter Create contest. ",
+                                          border: InputBorder.none),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  FontHandler(
+                                    title,
+                                    color: ColorHandler.bgColor,
+                                    textAlign: TextAlign.center,
+                                    fontsize: 40.sp,
+                                    fontweight: FontWeight.bold,
+                                  ),
+                                  FontHandler(subtitle,
+                                      color: ColorHandler.bgColor,
+                                      textAlign: TextAlign.center,
+                                      fontsize: 25.sp,
+                                      fontweight: FontWeight.bold),
+                                  SizedBox(
+                                    height: 125,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10.w, vertical: 10.h),
+                                      child: Text(
+                                        about,
+                                        maxLines: 6,
+                                        softWrap: true,
+                                        style: const TextStyle(
+                                            fontSize: 16.0,
+                                            color: ColorHandler.bgColor),
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
-                            ),
-                            SizedBox(
-                              height: 120,
-                              child: TextField(
-
-                                controller: controller3,
-                                textAlign: TextAlign.center,
-                                textAlignVertical: TextAlignVertical.bottom,
-
-                                maxLines: 5,
-                                decoration: InputDecoration(
-                                  hintText: "ex. This package is also a submission to Flutter Create contest. ",
-                                    border: InputBorder.none
-
-
-
-                                ),
-                              ),
-                            ),
-
-                          ],
-                        )
-
-                            :Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            FontHandler(
-                              title,
-                              color: ColorHandler.bgColor,
-                              textAlign: TextAlign.center,
-                              fontsize: 40.sp,
-                              fontweight: FontWeight.bold,
-                            ),
-                            FontHandler(subtitle,
-                                color: ColorHandler.bgColor,
-                                textAlign: TextAlign.center,
-                                fontsize: 25.sp,
-                                fontweight: FontWeight.bold),
-                            SizedBox(
-                              height: 125,
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10.w, vertical: 10.h),
-                                child: Text(
-                                  about,
-                                  maxLines: 6,
-                                  softWrap: true,
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      color: ColorHandler.bgColor),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
                       )),
                   Positioned(
                     bottom: 0,
@@ -312,27 +287,37 @@ class _VirtualProfileScreenState extends State<VirtualProfileScreen> {
                           color: Colors.yellow),
                       child: IconButton(
                         alignment: Alignment.center,
-                        padding: EdgeInsets.only(right: 0),
+                        padding: const EdgeInsets.only(right: 0),
                         onPressed: () {
                           setState(() {
+                            controller1.text == ""
+                                ? title = title
+                                : title = controller1.text;
+                            controller2.text == ""
+                                ? subtitle = subtitle
+                                : subtitle = controller2.text;
+                            controller3.text == ""
+                                ? about = about
+                                : about = controller3.text;
+                            controller4.text == ""
+                                ? twitter = twitter
+                                : twitter = controller4.text;
+                            controller5.text == ""
+                                ? linkedin = linkedin
+                                : linkedin = controller5.text;
+                            controller6.text == ""
+                                ? website = website
+                                : website = controller6.text;
 
-                            controller1.text==""?title=title:title=controller1.text;
-                            controller2.text==""?subtitle=subtitle:subtitle=controller2.text;
-                            controller3.text==""?about=about:about=controller3.text;
-                            controller4.text==""?twitter=twitter:twitter=controller4.text;
-                            controller5.text==""?linkedin=linkedin:linkedin=controller5.text;
-                            controller6.text==""?website=website:website=controller6.text;
-
-
-                            EditPress?(EditPress=false,SaveInfo()):EditPress=true;
-
+                            EditPress
+                                ? (EditPress = false, SaveInfo())
+                                : EditPress = true;
                           });
-
-
-
                         },
                         icon: Icon(
-                          EditPress? IconHandler.submit:IconHandler.alternate_pencil,
+                          EditPress
+                              ? IconHandler.submit
+                              : IconHandler.alternate_pencil,
                           color: ColorHandler.bgColor,
                           size: 20,
                         ),
@@ -340,17 +325,17 @@ class _VirtualProfileScreenState extends State<VirtualProfileScreen> {
                     ),
                   ),
                 ]),
-                
                 Column(
                   children: [
                     SizedBox(
                       height: 16.h,
                     ),
                     SeeMore(
-                        icon: IconHandler.twitter,
-                        text: "Twitter",
-                        onPressed: () {},
-                      EditPress: EditPress, controller: controller4,
+                      icon: IconHandler.twitter,
+                      text: "Twitter",
+                      onPressed: () {},
+                      EditPress: EditPress,
+                      controller: controller4,
                     ),
                     SizedBox(
                       height: 16.h,
@@ -359,17 +344,21 @@ class _VirtualProfileScreenState extends State<VirtualProfileScreen> {
                       icon: IconHandler.linkedin,
                       text: "Linkedin",
                       onPressed: () {},
-                      EditPress: EditPress, controller: controller5,
+                      EditPress: EditPress,
+                      controller: controller5,
                     ),
                     SizedBox(
                       height: 16.h,
                     ),
                     SeeMore(
-                        icon: IconHandler.earth, text: "Website", onPressed: () {},EditPress: EditPress, controller: controller6,),
-
+                      icon: IconHandler.earth,
+                      text: "Website",
+                      onPressed: () {},
+                      EditPress: EditPress,
+                      controller: controller6,
+                    ),
                   ],
                 ),
-
               ],
             ),
             Container(
@@ -386,12 +375,9 @@ class _VirtualProfileScreenState extends State<VirtualProfileScreen> {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(100),
-                    child: Image.network(
-                      Userimg
-                    ),
+                    child: Image.network(Userimg),
                   ),
                 ),
-
               ]),
             ),
           ],
@@ -406,8 +392,8 @@ class SeeMore extends StatelessWidget {
     super.key,
     required this.icon,
     required this.text,
-    required this.onPressed, 
-    required this.EditPress, 
+    required this.onPressed,
+    required this.EditPress,
     required this.controller,
   });
   final IconData icon;
@@ -435,33 +421,30 @@ class SeeMore extends StatelessWidget {
               size: 30.sp,
               color: Colors.yellow,
             ),
-            EditPress?
-            SizedBox(
-              height: 50,
-              width: 240,
-              child: TextField(
-                controller: controller,
-                textAlign: TextAlign.center,
-                textAlignVertical: TextAlignVertical.bottom,
-
-                selectionHeightStyle: BoxHeightStyle.includeLineSpacingTop,
-                decoration: InputDecoration(
-                    hintText: text,
-
-
-                ),
-              ),
-
-            )
-                :Center(
-                widthFactor: 2.sp,
-                child: FontHandler(
-                  text,
-                  color: ColorHandler.normalFont,
-                  textAlign: TextAlign.center,
-                  fontweight: FontWeight.w800,
-                  fontsize: 20.sp,
-                )),
+            EditPress
+                ? SizedBox(
+                    height: 50,
+                    width: 240,
+                    child: TextField(
+                      controller: controller,
+                      textAlign: TextAlign.center,
+                      textAlignVertical: TextAlignVertical.bottom,
+                      selectionHeightStyle:
+                          BoxHeightStyle.includeLineSpacingTop,
+                      decoration: InputDecoration(
+                        hintText: text,
+                      ),
+                    ),
+                  )
+                : Center(
+                    widthFactor: 2.sp,
+                    child: FontHandler(
+                      text,
+                      color: ColorHandler.normalFont,
+                      textAlign: TextAlign.center,
+                      fontweight: FontWeight.w800,
+                      fontsize: 20.sp,
+                    )),
           ],
         ),
       ),

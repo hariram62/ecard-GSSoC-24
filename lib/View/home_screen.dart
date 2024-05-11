@@ -16,7 +16,9 @@ import 'coreRes/font-handler.dart';
 import 'coreRes/icon_handler.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}); // Constructor for HomeScreen widget
+  const HomeScreen({
+    super.key,
+  }); // Constructor for HomeScreen widget
 
   static const routeName = "/home"; // Route name for navigation
 
@@ -41,26 +43,22 @@ class HomeScreen extends StatelessWidget {
         children: [
           LayoutBuilder(
               builder: (BuildContext ctx, BoxConstraints constraints) {
-            return UserProgressBarLayout();
+            return const UserProgressBarLayout();
           }),
-
 
           SizedBox(height: 0.01.sh), // Spacer
 
           // Monitoring progress on different platforms
           LayoutBuilder(
-            builder: (BuildContext ctx, BoxConstraints constraints) {
-            return ProgressLayout();
-            }
-            ),
+              builder: (BuildContext ctx, BoxConstraints constraints) {
+            return const ProgressLayout();
+          }),
 
           // Friends activity section
           LayoutBuilder(
               builder: (BuildContext ctx, BoxConstraints constraints) {
-                return ActivitybarLayout();
-              }
-          ),
-
+            return const ActivitybarLayout();
+          }),
         ],
       ),
     );

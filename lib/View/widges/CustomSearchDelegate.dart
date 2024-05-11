@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:convert';
 
@@ -10,22 +9,15 @@ import '../../Model/snapshot_handler.dart';
 import '../coreRes/color_handler.dart';
 import '../subscreen/Comunity/community.dart';
 
-
 class CustomSearchDelegate extends SearchDelegate {
-
-
-  CustomSearchDelegate(){
+  CustomSearchDelegate() {
     _LoadData(query);
   }
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
-
   // Demo list to show querying
-  List searchTerms = [
-
-  ];
-
+  List searchTerms = [];
 
   // first overwrite to
   // clear the search text
@@ -36,7 +28,7 @@ class CustomSearchDelegate extends SearchDelegate {
         onPressed: () {
           query = '';
         },
-        icon: Icon(Icons.clear),
+        icon: const Icon(Icons.clear),
       ),
     ];
   }
@@ -48,51 +40,45 @@ class CustomSearchDelegate extends SearchDelegate {
       onPressed: () {
         close(context, null);
       },
-      icon: Icon(Icons.arrow_back),
+      icon: const Icon(Icons.arrow_back),
     );
   }
-  Future<void> _LoadData (dynamic query)  async {
 
-    await FirebaseFirestore.instance.collection("User_Profiles").get()
+  Future<void> _LoadData(dynamic query) async {
+    await FirebaseFirestore.instance
+        .collection("User_Profiles")
+        .get()
         .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+      for (var doc in querySnapshot.docs) {
         Map a = doc.data() as Map<String, dynamic>;
         searchTerms.add(a);
-
-      });
+      }
     });
-
-
   }
 
   Future<void> AddToConnections(dynamic result) async {
-    final data={
-      "name":result['name'].toString(),
+    final data = {
+      "name": result['name'].toString(),
       "image": result['image'].toString(),
       "uid": result['uid'].toString(),
     };
 
-
     await SnapShotHandler.SetData(
-        FirebaseFirestore.instance.collection('User_Connections')
-        .doc(auth.currentUser?.uid).collection("Connections").doc(result['uid']),data);
-
-    
+        FirebaseFirestore.instance
+            .collection('User_Connections')
+            .doc(auth.currentUser?.uid)
+            .collection("Connections")
+            .doc(result['uid']),
+        data);
   }
-
-
-
 
   // third overwrite to show query result
   @override
   Widget buildResults(BuildContext context) {
     List matchQuery = [];
 
-
-
     for (var re in searchTerms) {
-      if (re["name"]==query) {
-
+      if (re["name"] == query) {
         matchQuery.add(re);
       }
     }
@@ -102,14 +88,15 @@ class CustomSearchDelegate extends SearchDelegate {
         var result = matchQuery[index];
 
         return ListTile(
-          
-          title:  ActivitesBar(
+          title: ActivitesBar(
             FriendName: result['name'],
-            isforSearch:true,
+            isforSearch: true,
             ImgSrc: result['image'],
             Uid: result['uid'],
-            onAddpress:(){ AddToConnections(result);}, FriendLavel: '',
-
+            onAddpress: () {
+              AddToConnections(result);
+            },
+            FriendLavel: '',
           ),
         );
       },
@@ -130,12 +117,10 @@ class CustomSearchDelegate extends SearchDelegate {
     return ColoredBox(
       color: ColorHandler.bgColor,
       child: ListView.builder(
-
         itemCount: matchQuery.length,
         itemBuilder: (context, index) {
           var result = matchQuery[index];
           return ListTile(
-
             title: Text(result),
           );
         },

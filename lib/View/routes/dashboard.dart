@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -20,28 +19,28 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  PersistentTabController _controller =
+  final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
 
   List<Widget> _buildScreen() {
     return [
-      HomeScreen(),
-      AnalysisScreen(),
+      const HomeScreen(),
+      const AnalysisScreen(),
       QRScanScreen(),
-      ChatScreen(),
-      ProfileScreen(),
+      const ChatScreen(),
+      const ProfileScreen(),
     ];
   }
 
   List<PersistentBottomNavBarItem> _navBaritem() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(IconHandler.NavHome),
+        icon: const Icon(IconHandler.NavHome),
         activeColorPrimary: ColorHandler.normalFont,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(IconHandler.progress),
+        icon: const Icon(IconHandler.progress),
         activeColorPrimary: ColorHandler.normalFont,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -53,11 +52,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
           activeColorPrimary: ColorHandler.bgColor.withOpacity(0.3),
           inactiveColorPrimary: ColorHandler.normalFont),
       PersistentBottomNavBarItem(
-          icon: Icon(IconHandler.message),
+          icon: const Icon(IconHandler.message),
           activeColorPrimary: ColorHandler.normalFont,
           inactiveColorPrimary: CupertinoColors.systemGrey),
       PersistentBottomNavBarItem(
-          icon: Icon(IconHandler.person),
+          icon: const Icon(IconHandler.person),
           activeColorPrimary: ColorHandler.normalFont,
           inactiveColorPrimary: CupertinoColors.systemGrey),
     ];

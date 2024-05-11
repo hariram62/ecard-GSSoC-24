@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,20 +16,20 @@ class UserprofileInfo extends StatefulWidget {
 }
 
 class _UserprofileInfoState extends State<UserprofileInfo> {
-  String path="";
-  String fullName="Name";
-  String email="@email.com";
+  String path = "";
+  String fullName = "Name";
+  String email = "@email.com";
 
-  String defaultImg="https://cdn.vectorstock.com/i/1000x1000/13/68/person-gray-photo-placeholder-man-vector-23511368.webp";
+  String defaultImg =
+      "https://cdn.vectorstock.com/i/1000x1000/13/68/person-gray-photo-placeholder-man-vector-23511368.webp";
 
-  final User? user=SnapShotHandler.CurrentUser();
-  CollectionReference User_profile = FirebaseFirestore.instance.collection("User_Profiles");
-
+  final User? user = SnapShotHandler.CurrentUser();
+  CollectionReference User_profile =
+      FirebaseFirestore.instance.collection("User_Profiles");
 
   ImageHandler() async {
-
     await User_profile.doc(user?.uid).get().then(
-          (DocumentSnapshot doc) {
+      (DocumentSnapshot doc) {
         final data = doc.data() as Map<String, dynamic>;
         setState(() {
           path = data['image'].toString();
@@ -40,38 +39,28 @@ class _UserprofileInfoState extends State<UserprofileInfo> {
       },
       onError: (e) => print("Error getting document: $e"),
     ).onError((error, stackTrace) => null);
-
   }
-
 
   @override
-  void initState(){
-    try{
+  void initState() {
+    try {
       ImageHandler();
-    }catch(e) {
-
-    }
-
+    } catch (e) {}
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Stack(children: [
-
           SizedBox(
             width: 90.r,
             height: 90.r,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100.sp),
-              child: Image.network(
-                  path==""?defaultImg:path
-              ),
+              child: Image.network(path == "" ? defaultImg : path),
             ),
           ),
-
           Positioned(
             bottom: 0,
             right: 0,
@@ -89,7 +78,6 @@ class _UserprofileInfoState extends State<UserprofileInfo> {
             ),
           ),
         ]),
-
         SizedBox(
           height: 6.r,
         ),
@@ -109,11 +97,9 @@ class _UserprofileInfoState extends State<UserprofileInfo> {
               fontSize: 18.sp,
               fontStyle: FontStyle.normal),
         ),
-
         SizedBox(
           height: 16.r,
         ),
-
         SizedBox(
           width: 160.r,
           child: ElevatedButton(
@@ -134,8 +120,8 @@ class _UserprofileInfoState extends State<UserprofileInfo> {
               },
               child: Text(
                 "Edit Profile",
-                style: TextStyle(
-                    color: ColorHandler.normalFont, fontSize: 18.sp),
+                style:
+                    TextStyle(color: ColorHandler.normalFont, fontSize: 18.sp),
               )),
         ),
       ],
